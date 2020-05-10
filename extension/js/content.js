@@ -48,15 +48,15 @@
       exitedNotJsonTime,
       displayedFormattedJsonTime
   ;
-  
+
   // Open the port "jf" now, ready for when we need it
     // console.time('established port') ;
     port = chrome.extension.connect({name: 'jf'}) ;
-    
+
   // Add listener to receive response from BG when ready
     port.onMessage.addListener( function (msg) {
       // console.log('Port msg received', msg[0], (""+msg[1]).substring(0,30)) ;
-      
+
       switch (msg[0]) {
         case 'NOT JSON' :
           pre.hidden = false ;
@@ -64,7 +64,7 @@
           document.body.removeChild(jfContent) ;
           exitedNotJsonTime = +(new Date()) ;
           break ;
-          
+
         case 'FORMATTING' :
           isJsonTime = +(new Date()) ;
 
@@ -85,13 +85,13 @@
             setTimeout(function(){
               formattingMsg.hidden = false ;
             }, 250) ;
-          
-          
+
+
           // Create option bar
             var optionBar = document.createElement('div') ;
             optionBar.id = 'optionBar' ;
-          
-          
+
+
           // Show options link, if needed - FROM FUTURE
             // if (settings.enableOptionsLink) {
             //   var optionsLink = document.createElement('a') ;
@@ -101,7 +101,7 @@
             //   optionsLink.target = '_BLANK' ;
             //   optionBar.appendChild(optionsLink) ;
             // }
-          
+
           // Create toggleFormat button
             var buttonPlain = document.createElement('button'), buttonFormatted = document.createElement('button') ;
             buttonPlain.id = 'buttonPlain' ;
@@ -109,7 +109,7 @@
             buttonFormatted.id = 'buttonFormatted' ;
             buttonFormatted.innerText = 'Parsed' ;
             buttonFormatted.classList.add('selected') ;
-            
+
             var plainOn = false ;
             buttonPlain.addEventListener(
               'click',
@@ -126,7 +126,7 @@
               },
               false
             ) ;
-            
+
             buttonFormatted.addEventListener(
               'click',
               function () {
@@ -142,7 +142,7 @@
               },
               false
             ) ;
-            
+
             // Put it in optionBar
               optionBar.appendChild(buttonPlain) ;
               optionBar.appendChild(buttonFormatted) ;
@@ -153,16 +153,16 @@
               generalClick,
               false // No need to propogate down
             ) ;
-          
+
           // Put option bar in DOM
             document.body.insertBefore(optionBar, pre) ;
 
           break ;
-            
+
         case 'FORMATTED' :
           // Insert HTML content
             jfContent.innerHTML = msg[1] ;
-          
+
           displayedFormattedJsonTime = Date.now() ;
 
           // Log times
@@ -181,19 +181,19 @@
             }, 100) ;
 
           break ;
-        
+
         default :
           throw new Error('Message not understood: ' + msg[0]) ;
       }
     });
-  
+
     // console.timeEnd('established port') ;
 
 
   function ready () {
-    
+
     domReadyTime = Date.now() ;
-      
+
     // First, check if it's a PRE and exit if not
       var bodyChildren = document.body.childNodes ;
       pre = bodyChildren[0] ;
@@ -208,20 +208,20 @@
 
         // Disconnect the port (without even having used it)
           port.disconnect() ;
-        
+
         // EXIT POINT: NON-PLAIN-TEXT PAGE (or longer than 3MB)
       }
       else {
         // This is a 'plain text' page (just a body with one PRE child).
         // It might be JSON/JSONP, or just some other kind of plain text (eg CSS).
-        
+
         // Hide the PRE immediately (until we know what to do, to prevent FOUC)
           pre.hidden = true ;
           //console.log('It is text; hidden pre at ') ;
           slowAnalysisTimeout = setTimeout(function(){
             pre.hidden = false ;
           }, 1000) ;
-        
+
         // Send the contents of the PRE to the BG script
           // Add jfContent DIV, ready to display stuff
             jfContent = document.createElement('div') ;
@@ -234,7 +234,7 @@
               text: pre.innerText,
               length: jsonLength
             });
-        
+
           // Now, this script will just wait to receive anything back via another port message. The returned message will be something like "NOT JSON" or "IS JSON"
       }
 
@@ -247,7 +247,7 @@
         }
       });
   }
-  
+
   document.addEventListener("DOMContentLoaded", ready, false);
 
   var lastKvovIdGiven = 0 ;
@@ -308,7 +308,7 @@
 
     if (ev.which === 1) {
       var elem = ev.target ;
-      
+
       if (elem.className === 'e') {
         // It's a click on an expander.
 
@@ -320,7 +320,7 @@
             scrollTop = document.body.scrollTop,
             parentSiblings
         ;
-        
+
         // Expand or collapse
           if (parent.classList.contains('collapsed')) {
             // EXPAND
@@ -354,10 +354,10 @@
             }
 
           // console.log('Scrolltop HAS changed. document.body.scrollTop is now '+document.body.scrollTop+'; was '+scrollTop) ;
-          
+
           // The body has got a bit shorter.
           // We need to increase the body height by a bit (by increasing the bottom margin on the jfContent div). The amount to increase it is whatever is the difference between our previous scrollTop and our new one.
-          
+
           // Work out how much more our target scrollTop is than this.
             var difference = scrollTop - document.body.scrollTop  + 8 ; // it always loses 8px; don't know why
 
@@ -367,7 +367,7 @@
 
           // Now change the scrollTop back to what it was
             document.body.scrollTop = scrollTop ;
-            
+
         return ;
       }
     }
