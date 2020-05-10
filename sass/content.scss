@@ -1,6 +1,8 @@
 /*@charset "utf-8";*/
+/*development_mode*/
 
 body {
+  background-color: #151515;
   -webkit-user-select: text ;
   overflow-y: scroll !important ;
   margin: 0 ;
@@ -166,18 +168,18 @@ pre {
 /* SYNTAX HIGHLIGHTING */
 
   #formattedJson, #jsonpOpener, #jsonpCloser {
-    color: #333 ;
+    color: #fff;
     font: 13px/18px monospace ;
   }
 
   #formattedJson {
-    color: #444 ;
+    color: #fff;
   }
   .b /* Bracket/brace */ {
     font-weight: bold ;
   }
   .s {
-    color: #0B7500 ;
+    color: #18ff00;
     word-wrap: break-word; 
   }
   a:link, a:visited {
@@ -190,7 +192,7 @@ pre {
   }
   .bl, .nl, .n { /* bool, null, number */
     font-weight: bold ;
-    color: #1A01CC ;
+    color: #0088ff;
   }
   .k { /* key */
     color: black ;
