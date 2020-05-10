@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*@charset "utf-8";*/
 /*development_mode*/
-body {
+body.jf {
   background-color: #151515;
   -webkit-user-select: text;
   overflow-y: scroll !important;
@@ -132,7 +132,7 @@ pre {
   background-repeat: no-repeat;
   background-position: center center;
   display: block;
-  opacity: 0.15;
+  opacity: 1;
   /* .e that are *inside* the children of a collapsed one */
 }
 .collapsed > .e {
@@ -196,7 +196,7 @@ a:hover, a:active {
 
 .k {
   /* key */
-  color: black;
+  color: #fff;
 }
 
 #formattingMsg {
